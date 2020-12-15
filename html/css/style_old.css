@@ -164,6 +164,30 @@ ul.agileinfotickwthree li input[type="checkbox"]:checked+label span:first-child:
 	height: 10px;
 }
 
+input[type="button"] {
+	font-size: 16px;
+	padding: 10px 65px;
+	background-color: #537b35;
+	color: #FFF;
+	border: none;
+	border-radius: 0px;
+	outline: none;
+	float:none;
+	cursor: pointer;
+}
+
+a.button_search{
+	font-size: 16px;
+	padding: 10px 65px;
+	background-color: #537b35;
+	color: #FFF;
+	border: none;
+	border-radius: 0px;
+	outline: none;
+	float:none;
+	cursor: pointer;
+}
+
 input[type="submit"] {
 	font-size: 16px;
 	padding: 10px 65px;
