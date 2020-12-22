@@ -1,0 +1,166 @@
+	<!DOCTYPE html>
+	<html>
+	<!-- Head -->
+	<head>
+	<title>User Transfer History</title>
+	<!-- Meta-Tags -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="keywords" content="Existing Login Form Widget Responsive, Login Form Web Template, Flat Pricing Tables, Flat Drop-Downs, Sign-Up Web Templates, Flat Web Templates, Login Sign-up Responsive Web Template, Smartphone Compatible Web Template, Free Web Designs for Nokia, Samsung, LG, Sony Ericsson, Motorola Web Design">
+	<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+	<script src="js/history.js" type="text/javascript"></script>
+	<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+	<script src="js/jquery.magnific-popup.js" type="text/javascript"></script>
+	<!-- //Meta-Tags -->
+
+	<link href="css/popuo-box.css" rel="stylesheet" type="text/css" media="all" />
+
+	<!-- Style --> <link rel="stylesheet" href="css/style_new.css" type="text/css" media="all">
+	<script> 
+	    $(document).ready(function() {
+			$('.button_search,.w3_play_icon,.w3_play_icon1,.w3_play_icon2').magnificPopup({
+				type: 'inline',
+				fixedContentPos: false,
+				fixedBgPos: true,
+				overflowY: 'auto',
+				closeBtnInside: true,
+				preloader: false,
+				midClick: true,
+				removalDelay: 300,
+				mainClass: 'my-mfp-zoom-in'
+			});
+													
+			});
+	</script>
+	<style type="text/css">
+	    #table {
+	        padding: 0;
+	    }
+	    
+	    #table>tbody>tr {
+	        cursor: pointer;
+	    }
+	    
+	</style>
+
+	</head>
+	<!-- //Head -->
+
+	<!-- Body -->
+	<body style="padding: 50px;">
+		<h1>History</h1>
+		<div class="w3layoutscontaineragileits" style="width: 80%">
+	    <div id="table"></div>
+	    </div>
+	    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+	    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	    <!-- Latest compiled and minified JavaScript -->
+	    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>
+	    <!-- Latest compiled and minified Locales -->
+	    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/locale/bootstrap-table-zh-CN.min.js"></script>
+	    <script type="text/javascript">
+	        var $table = $('#table')
+
+	        $(function() {
+	            searchData();
+	        })
+
+	        function prepareDisplayData(data) {
+	            return {
+	                total: data.table.length,
+	                fixedScroll: false,
+	                rows: data.data
+	            }
+	        }
+
+	        function searchData() {
+	            var search_url = "./php/database.php";
+	            var cur_url = window.location.href;
+	            var cur_user = cur_url.split('=')[1]
+	            //url 中问号后面的参数 action，这个对象就是查询的参数
+	            var dataParam = {
+	                action: "query_history",
+	                user: cur_user
+	            }
+
+	            console.log(dataParam);
+	            $.ajax({
+	                type: "get",
+	                url: search_url,
+	                data: dataParam,
+	                dataType: 'json',
+	                contentType: 'application/json; charset=utf-8',
+	                success: function(data) {
+	                    //测试是否可以拿到php中的数据
+	                    console.log(data);
+	                    //bootstrap-table 组织数据
+	                    if(data.table == -1){
+	                    	return;
+	                    }
+	                    var displayData = prepareDisplayData(data);
+	                    if(displayData.total > 0) {
+	                        // $('#table').bootstrapTable('load', displayData);
+	                        console.log(displayData);
+	                    } else {
+	                        console.log("last page or empty.");
+	                    }
+	                   	$('#table').bootstrapTable({
+				            pagination: true,
+				            // sidePagination: 'server', //设置为服务器端分页
+				            data:data.table,
+				            pageNumber: 1,
+				            pageSize: 10,
+				            pageList: [10, 20, 50, 100],
+				            search: false,
+				            showColumns: false,
+				            showRefresh: false,
+				            columns: [ {
+				                field: 'time',
+				                title: '转账时间',
+				                width: '1000',
+				                align: 'center',
+				                valign: 'middle'
+				            }, {
+				                field: 'src_user',
+				                title: '转出人',
+				                width: '400',
+				                align: 'center',
+				                valign: 'middle'
+				            }, {
+				                field: 'dst_user',
+				                title: '转入人',
+				                width: '400',
+				                align: 'center',
+				                valign: 'middle'
+				            }, 
+				            {
+				                field: 'curr_money',
+				                title: '当前用户余额',
+				                width: '400',
+				                align: 'center',
+				                valign: 'middle'
+				            }, {
+				                field: 'trans_money',
+				                title: '转账数额',
+				                width: '400',
+				                align: 'center',
+				                valign: 'middle'
+				            }]
+				        })
+				        $('#table').bootstrapTable("hideLoading");
+
+	                },
+	                error: function(data) {
+	                    alert('服务器出错');
+	                },
+	            })
+
+	        }
+
+
+
+	    </script>
+	</body>
+	<!-- //Body -->
+
+	</html>
