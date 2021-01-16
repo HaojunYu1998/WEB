@@ -1,8 +1,8 @@
 <?php
 error_reporting(E_ALL); ini_set('display_errors', 1);
 	$servername = "127.0.0.1";
-	$username = "zyccc";
-	$password = "666";
+	$username = "root";
+	$password = "root";
 	$dbname = "myDB";
 	$conn = mysqli_connect($servername, $username, $password, $dbname);
 

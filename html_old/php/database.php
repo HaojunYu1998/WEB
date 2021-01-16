@@ -1,9 +1,9 @@
 <?php
 error_reporting(E_ALL); ini_set('display_errors', 1);
 	$servername = "127.0.0.1";
-	$username = "zyccc";
-	$password = "666";
-	$dbname = "myDB";
+	$username = "root";
+	$password = "root";
+	$dbname = "myDB_old";
 	$conn = mysqli_connect($servername, $username, $password, $dbname);
 
 	if (mysqli_connect_errno($conn)) {
@@ -152,7 +152,7 @@ error_reporting(E_ALL); ini_set('display_errors', 1);
 			$status1 = mysqli_query($conn, $upd1);
 			$status2 = mysqli_query($conn, $upd2);
 			$status3 = mysqli_query($conn, $upd3);
-			if(!$status1 or !$status2 or !$status3) {
+			if(!$status1 or !$status2) {
 				echo '3'; 
 				die('无法更新数据: ' . mysqli_error($conn));
 			}

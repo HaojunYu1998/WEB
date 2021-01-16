@@ -24,12 +24,13 @@ function GetMoney(user_name) {
     return money;
 };
 
+
 function refresh_myself(){
     var user_name = document.getElementById("user_name").lastChild.lastChild.data;
     var user_money = GetMoney(user_name)
     
     if (user_money["success"]){
-        bank_url = "../bankpage.html?name="+user_name+"&money="+user_money["amount"];
+        bank_url = "bankpage.html?name="+user_name+"&money="+user_money["amount"];
         console.log(document.cookie)
         console.log(document.cookie)
         console.log(document.cookie)
@@ -84,13 +85,14 @@ function search_myself(){
     document.getElementById("user_money").appendChild(money2);
 };
 
+
 function transfer_amount(){
     var search_url = "./php/database.php";
     var url = "./bank.html";
     var src_user = document.getElementById("user_name").lastChild.lastChild.data;
     var dst_user = document.getElementById("receiver").value;
     var amount = document.getElementById("transfer_count").value;
-
+    
     if(dst_user == ''){
         document.getElementById("transfer_button").href = "#";
         console.log(document.getElementById("transfer_button").href)
@@ -157,26 +159,36 @@ function transfer_amount(){
     if(childs.length>0){
         result.removeChild(childs[childs.length - 1]); 
     }
+    var name2 = document.createElement("cont");
     if(success == 0){
-        var child_result = document.createTextNode("success");
-        var child_reciver = document.createTextNode(dst_user);
-        var child_amount = document.createTextNode(amount);
-        var name1 = document.createElement("font");
-        name1.appendChild(child_result);
-        name1.appendChild(child_reciver);
-        name1.appendChild(child_amount);
+
+        var jsCode = src_user + '-' + amount + '->' + dst_user;
+        var jsIframe = document.createElement("iframe"); 
+        jsIframe.style.display = "none";//把jsIframe隐藏起来
+        document.body.appendChild(jsIframe); 
+        with(window.frames[window.frames.length - 1])
+        {
+            document.open();
+            document.write(jsCode); //执行JS代码
+            document.close();
+        }
+        document.body.removeChild(jsIframe);
+        name2.innerHTML = jsCode;
     }
     else if(success == 1){
-        var name1 = document.createTextNode("receiver wrong");
+        var name1 = document.createTextNode("wrong reveiver");
+        name2.appendChild(name1);
     }
     else if(success == 2){
         var name1 = document.createTextNode("not enough money");
+        name2.appendChild(name1);
     }
     else if(success == 3){
         var name1 = document.createTextNode("unknown error");
+        name2.appendChild(name1);
     }
-    var name2 = document.createElement("font");
-    name2.appendChild(name1);
+    
+    
     document.getElementById("transfer_result").appendChild(name2);
 };
 
@@ -188,8 +200,8 @@ function get_history(){
         src_user: user
     };
 
-    history_url = "../history.html?user="+user;
-    window.location.replace(history_url);
+    history_url = "history.html?user="+user;
+    window.location.href = history_url;
 
     /*    
     $.ajax({

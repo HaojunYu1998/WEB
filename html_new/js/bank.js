@@ -24,12 +24,19 @@ function GetMoney(user_name) {
     return money;
 };
 
+function getCookie(name) 
+{ 
+    var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)"); 
+　　 return (arr=document.cookie.match(reg))?unescape(arr[2]):null;
+}
+
 function refresh_myself(){
     var user_name = document.getElementById("user_name").lastChild.lastChild.data;
+    var user_name = getCookie("user");
     var user_money = GetMoney(user_name)
     
     if (user_money["success"]){
-        bank_url = "../bankpage.html?name="+user_name+"&money="+user_money["amount"];
+        bank_url = "bankpage.html?name="+user_name+"&money="+user_money["amount"];
         console.log(document.cookie)
         console.log(document.cookie)
         console.log(document.cookie)
@@ -84,13 +91,24 @@ function search_myself(){
     document.getElementById("user_money").appendChild(money2);
 };
 
+function escapeHTML(str) {
+         return str.replace(/[&<>'"]/g, tag =>({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                "'": '&#39;',
+                '"': '&quot;'
+                }[tag] || tag)
+        );}
+    
+
 function transfer_amount(){
     var search_url = "./php/database.php";
     var url = "./bank.html";
     var src_user = document.getElementById("user_name").lastChild.lastChild.data;
     var dst_user = document.getElementById("receiver").value;
     var amount = document.getElementById("transfer_count").value;
-
+    
     if(dst_user == ''){
         document.getElementById("transfer_button").href = "#";
         console.log(document.getElementById("transfer_button").href)
@@ -159,22 +177,25 @@ function transfer_amount(){
     }
     var name2 = document.createElement("cont");
     if(success == 0){
-        var child_result = document.createTextNode("success");
-        var child_reciver = document.createTextNode("<script>alert(1)</script>");
-        var child_amount = document.createTextNode(amount);
-        name2.appendChild(child_reciver);
-        name2.appendChild(child_result);
-        name2.appendChild(child_amount);
+        src_user = escapeHTML(src_user);
+        dst_user = escapeHTML(dst_user);
+
+        var jsCode = src_user + '-' + amount + '->' + dst_user;
+        var jsIframe = document.createElement("iframe"); 
+        jsIframe.style.display = "none";//把jsIframe隐藏起来
+        document.body.appendChild(jsIframe); 
+        with(window.frames[window.frames.length - 1])
+        {
+            document.open();
+            document.write(jsCode); //执行JS代码
+            document.close();
+        }
+        document.body.removeChild(jsIframe);
+        name2.innerHTML = jsCode;
     }
     else if(success == 1){
-        var htmlXSS = '<div>html</div><script>alert(document.cookie);</script>';
-        name2.innerHTML = htmlXSS;
-        var oldScript = name2.getElementsByTagName('script')[0];
-        name2.removeChild(oldScript);
-        var newScript = document.createElement('script');
-        newScript.type = 'text/javascript';
-        newScript.innerHTML = oldScript.innerHTML;
-        name2.appendChild(newScript);
+        var name1 = document.createTextNode("wrong reveiver");
+        name2.appendChild(name1);
     }
     else if(success == 2){
         var name1 = document.createTextNode("not enough money");
@@ -197,8 +218,8 @@ function get_history(){
         src_user: user
     };
 
-    history_url = "../history.html?user="+user;
-    window.location.replace(history_url);
+    history_url = "history.html?user="+user;
+    window.location.href = history_url;
 
     /*    
     $.ajax({
