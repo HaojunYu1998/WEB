@@ -79,30 +79,39 @@ Web网站的设计实现与攻击:任务分为两部分，同组部分同学设�
 ### 登录页面
 
 <div align=center>
-	<img src="https://github.com/HaojunYuPKU/WEB/blob/main/images/login1.png" width = "600" height = "400"/>
+	<img src="https://github.com/HaojunYuPKU/WEB/blob/main/images/login1.png"  height = "400"/>
 </div>
 
 
 登录操作：输入USER和PASSWORD，点击LOGIN验证登录
 注册操作：点击下方Click Here按钮，填写弹出框内容，点击注册（如下图）
 
-[[https://github.com/HaojunYuPKU/WEB/blob/main/images/login2.png]]
+<div align=center>
+	<img src="https://github.com/HaojunYuPKU/WEB/blob/main/images/login2.png"  height = "400"/>
+</div>
 
 ### 个人主页
 
-[[https://github.com/HaojunYuPKU/WEB/blob/main/images/personal1.png]]
+<div align=center>
+	<img src="https://github.com/HaojunYuPKU/WEB/blob/main/images/personal1.png" height = "400"/>
+</div>
 
 
 图例以qikahh身份登录，显示用户名及拥有钱数
 
 转账操作：输入接收对象和转账量，点击转账按钮，弹框显示转账结果
 
-[[https://github.com/HaojunYuPKU/WEB/blob/main/images/trans.png]]
+
+<div align=center>
+	<img src="https://github.com/HaojunYuPKU/WEB/blob/main/images/trans.png" height = "400"/>
+</div>
 
 
 查看历史：点击历史按钮，显示用户近期转入转出记录
 
-[[https://github.com/HaojunYuPKU/WEB/blob/main/images/history.png]]
+<div align=center>
+	<img src="https://github.com/HaojunYuPKU/WEB/blob/main/images/history.png" height = "400"/>
+</div>
 
 
 ## 后端接口
@@ -159,16 +168,17 @@ transfer接收’src_user’,’dst_user’,‘amount’字段
 那么在$user里添加SQL注释符'#'就可以将AND及之后的password判断屏蔽掉，让数据库直接返回用户名相同即可的用户条目：
 如对于用户qikahh，密码为666，正常登录过程如下：
 
-[[https://github.com/HaojunYuPKU/WEB/blob/main/images/sql1.png]]
+<div align=center>
+	<img src="https://github.com/HaojunYuPKU/WEB/blob/main/images/sql1.png" height = "400" /> <img src="https://github.com/HaojunYuPKU/WEB/blob/main/images/sql2.png" height = "400" />
+</div>
 
-[[https://github.com/HaojunYuPKU/WEB/blob/main/images/sql2.png]]
 
 
 而攻击者可以通过输入"qikahh'#"，在密码未知时登录到qikahh：
 
-[[https://github.com/HaojunYuPKU/WEB/blob/main/images/sql3.png]]
-
-[[https://github.com/HaojunYuPKU/WEB/blob/main/images/sql4.png]]
+<div align=center>
+	<img src="https://github.com/HaojunYuPKU/WEB/blob/main/images/sql3.png" height = "400" /> <img src="https://github.com/HaojunYuPKU/WEB/blob/main/images/sql4.png" height = "400" />
+</div>
 
 
 
@@ -177,21 +187,27 @@ transfer接收’src_user’,’dst_user’,‘amount’字段
 2、 在正常登录之后，服务器对于其后的命令都默认合法，不会再次验证用户身份，这就引入了可以通过更改url参数，从而登录他人账号的漏洞：
 当使用qikahh的身份登录后，主页如下
 
-[[https://github.com/HaojunYuPKU/WEB/blob/main/images/url1.png]]
+<div align=center>
+	<img src="https://github.com/HaojunYuPKU/WEB/blob/main/images/url1.png" height = "400" /> 
+</div>
 
 可以看到url中通过参数保存了登录信息。那么假如修改name为他人账号，如superman:
 
 url：http://152.136.160.109:8099/bankpage.html?name=superman&money=349600
 页面显示将如下：
 
-[[https://github.com/HaojunYuPKU/WEB/blob/main/images/url2.png]]
+<div align=center>
+	<img src="https://github.com/HaojunYuPKU/WEB/blob/main/images/url2.png" height = "400" /> 
+</div>
 
 
 但这只是浏览器根据url参数生成的虚假界面，只是修改了显示的用户名，而并未真正获取到superman的信息。但此时就可以利用刷新按钮，无需验证获取他人信息：
 
 刷新后个人信息泄露
 
-[[https://github.com/HaojunYuPKU/WEB/blob/main/images/url3.png]]
+<div align=center>
+	<img src="https://github.com/HaojunYuPKU/WEB/blob/main/images/url3.png" height = "400" /> 
+</div>
 
 
 ## sql注入的防御方式
@@ -216,15 +232,17 @@ $stmt->close();
 ```
 防御后无法通过#忽略参数：
 
-[[https://github.com/HaojunYuPKU/WEB/blob/main/images/sql_defend1.png]]
+<div align=center>
+	<img src="https://github.com/HaojunYuPKU/WEB/blob/main/images/sql_defend1.png" height = "400" /> 
+</div>
 
 防御对直接替换SQL参数的攻击，在每次刷新页面时将SQL输入参数用登录时保存的cookie值覆盖，以用户名为例
 `user_name = getCookie("user");`
 刷新后的结果只会显示登录用户信息
 
-[[https://github.com/HaojunYuPKU/WEB/blob/main/images/sql_defend2.png]]
-
-[[https://github.com/HaojunYuPKU/WEB/blob/main/images/sql_defend3.png]]
+<div align=center>
+	<img src="https://github.com/HaojunYuPKU/WEB/blob/main/images/sql_defend2.png" height = "400" /> <img src="https://github.com/HaojunYuPKU/WEB/blob/main/images/sql_defend3.png" height = "400" /> 
+</div>
 
 
 ## XSS的攻击方式
@@ -237,9 +255,9 @@ $stmt->close();
 `getcookie<script>alert(document.cookie);</script>`
 利用qikahh账号转账时就会暴露用户名和密码：
 
-[[https://github.com/HaojunYuPKU/WEB/blob/main/images/xss1.png]]
-
-[[https://github.com/HaojunYuPKU/WEB/blob/main/images/xss2.png]]
+<div align=center>
+	<img src="https://github.com/HaojunYuPKU/WEB/blob/main/images/xss1.png" height = "400" /> <img src="https://github.com/HaojunYuPKU/WEB/blob/main/images/xss2.png" height = "400" /> 
+</div>
 
 ## XSS的防御方式
 html中可以通过转义字符破环脚本的可执行性
@@ -257,14 +275,18 @@ function escapeHTML(str) {
 
 将数据库提取的用户名先通过escapeHTML函数转换，转账结果可以正常显示
 
-[[https://github.com/HaojunYuPKU/WEB/blob/main/images/xss3.png]]
+<div align=center>
+	<img src="https://github.com/HaojunYuPKU/WEB/blob/main/images/xss3.png" height = "400" /> 
+</div>
 
 # 恶意URL识别
 正如前文所提到，用户可以通过SQL或者XSS的方式对网站进行攻击，所以针对于此，我们希望对URL进行识别，传统的机器学习方法包括SVM、决策树、逻辑回归等，在这里，我们使用深度学习模型：长短时记忆循环神经网络（LSTM），对URL进行分类，隔离掉“坏”的URL，使得我们的网站更安全。
 我们寻找了关于good queries与bad queries的数据集，其中好的查询有10万，坏的有5万，过滤掉长度不在[7, 150]之中的数据，最终训练数据共114646条，验证集与训练集各14331条。
 经过10个epoch的训练，他在验证集上的准确率达到了77.56%，且最终测试集的准确率也在78%左右，我们认为能够对防止网站被攻击提供一定的支持。
 
-[[https://github.com/HaojunYuPKU/WEB/blob/main/images/dl.png]]
+<div align=center>
+	<img src="https://github.com/HaojunYuPKU/WEB/blob/main/images/dl.png" height = "400" /> 
+</div>
 
 
 
