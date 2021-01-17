@@ -77,7 +77,11 @@ Web网站的设计实现与攻击:任务分为两部分，同组部分同学设�
 # 网页设计
 ## 前端GUI
 ### 登录页面
-[[https://github.com/HaojunYuPKU/WEB/blob/main/images/login1.png]]
+
+<div align=center>
+	<img src="https://github.com/HaojunYuPKU/WEB/blob/main/images/login1.png" width = "600" height = "400"/>
+</div>
+
 
 登录操作：输入USER和PASSWORD，点击LOGIN验证登录
 注册操作：点击下方Click Here按钮，填写弹出框内容，点击注册（如下图）
